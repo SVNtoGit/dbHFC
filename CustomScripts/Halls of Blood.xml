@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<DungeonBuddyProfile xsi:noNamespaceSchemaLocation="../../DungeonbuddyProfile.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>Halls of Blood</Name>
+  <DungeonId>983</DungeonId>
+  <BossEncounters>
+      <Boss isFinal="false" entry="92146" name="Gurtogg Bloodboil" killOrder="1" optional="false" X="3594.473" Y="-339.6858" Z="55.9385" />
+      <Boss isFinal="false" entry="92142" name="Blademaster Jubei'thos" killOrder="1" optional="false" X="3622.799" Y="-339.7592" Z="46.05947" />
+      <Boss isFinal="false" entry="92144" name="Dia Darkwhisper" killOrder="1" optional="false" X="3620.052" Y="-359.038" Z="46.05945" />
+      <Boss isFinal="false" entry="90378" name="Kilrogg Deadeye" killOrder="2" optional="false" X="3778.637" Y="-232.4983" Z="56.25085" />
+	  <Boss isFinal="true" entry="90199" name="Gorefiend" killOrder="3" optional="false" X="3950.103" Y="-100.7014" Z="-21.42087" />
+  </BossEncounters>
+  <Blackspots>
+  </Blackspots>
+  <PullBlackspots>
+  </PullBlackspots>
+</DungeonBuddyProfile>
