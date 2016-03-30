@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<DungeonBuddyProfile xsi:noNamespaceSchemaLocation="../../DungeonbuddyProfile.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>Bastion of Shadows</Name>
+  <DungeonId>984</DungeonId>
+  <BossEncounters>
+      <Boss isFinal="false" entry="90316" name="Shadow-Lord Iskar" killOrder="1" optional="false" X="4039.911" Y="2578.213" Z="210.7901" />
+      <Boss isFinal="false" entry="90296" name="Soulbound Construct" killOrder="2" optional="false" X="3797.021" Y="2321.76" Z="190.0517" />
+      <Boss isFinal="false" entry="92330" name="Soul of Socrethar" killOrder="2" optional="false" X="3802.961" Y="2335.136" Z="190.0514" />
+	  <Boss isFinal="true" entry="90269" name="Tyrant Velhari" killOrder="3" optional="false" X="3798.547" Y="2537.909" Z="204.6102" />
+  </BossEncounters>
+  <Blackspots>
+      <Blackspot X="4008.155" Y="2499.61" Z="210.8061" Radius="13.48737" /> <!-- crates right facing exit of iskar -->
+      <Blackspot X="3987" Y="2538.449" Z="210.806" Radius="6.883886" /> <!-- Side door not open at iskar -->
+  </Blackspots>
+  <PullBlackspots>
+  </PullBlackspots>
+</DungeonBuddyProfile>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<DungeonBuddyProfile xsi:noNamespaceSchemaLocation="../../DungeonbuddyProfile.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>Destructor's Rise</Name>
+  <DungeonId>985</DungeonId>
+  <BossEncounters>
+      <Boss isFinal="false" entry="89890" name="Fel Lord Zakuun" killOrder="1" optional="false" X="4265.603" Y="2511.984" Z="179.9171" />
+      <Boss isFinal="false" entry="93068" name="Xhul'horac" killOrder="2" optional="false" X="4139.58" Y="2141.519" Z="184.3424" />
+	  <Boss isFinal="true" entry="91349" name="Mannoroth" killOrder="3" optional="false" X="-2955.994" Y="-321.1508" Z="606.2307" />
+  </BossEncounters>
+  <Blackspots>
+  </Blackspots>
+  <PullBlackspots>
+  </PullBlackspots>
+</DungeonBuddyProfile>

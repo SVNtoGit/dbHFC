@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<DungeonBuddyProfile xsi:noNamespaceSchemaLocation="../../DungeonbuddyProfile.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>Hellbreach</Name>
+  <DungeonId>982</DungeonId>
+  <BossEncounters>
+      <Boss isFinal="false" entry="95652" name="Reinforced Hellfire Door" killOrder="1" optional="false" X="3959.342" Y="-716.2327" Z="32.66615"/>
+      <Boss isFinal="false" entry="90284" name="Iron Reaver" killOrder="2" optional="false" X="3947.689" Y="-631.6832" Z="30.88577"/>
+	  <Boss isFinal="true" entry="90435" name="Kormrok" killOrder="3" optional="false" X="4297.909" Y="-301.2104" Z="35.95184" />
+  </BossEncounters>
+  <Blackspots>
+   <!-- korm pools - messy -->
+   <Blackspot X="4274.946" Y="-410.9449" Z="35.91743" Radius="5" />
+    <Blackspot X="4273.278" Y="-406.2451" Z="35.47961" Radius="5" />
+    <Blackspot X="4271.023" Y="-401.5394" Z="35.48145" Radius="5" />
+    <Blackspot X="4271.64" Y="-395.9653" Z="35.65408" Radius="5" />
+    <Blackspot X="4271.823" Y="-390.6742" Z="35.85863" Radius="5" />
+    <Blackspot X="4270.04" Y="-385.608" Z="35.87443" Radius="5" />
+    <Blackspot X="4269.192" Y="-380.3614" Z="35.59833" Radius="5" />
+    <Blackspot X="4271.393" Y="-375.2806" Z="35.65004" Radius="5" />
+    <Blackspot X="4275.032" Y="-371.346" Z="35.50462" Radius="5" />
+    <Blackspot X="4278.95" Y="-367.6559" Z="35.39439" Radius="5" />
+    <Blackspot X="4283.556" Y="-364.8676" Z="35.41654" Radius="5" />
+    <Blackspot X="4288.876" Y="-363.0304" Z="35.43892" Radius="5" />
+    <Blackspot X="4294.083" Y="-361.7794" Z="35.48243" Radius="5" />
+    <Blackspot X="4299.144" Y="-363.4302" Z="35.54657" Radius="5" />
+    <Blackspot X="4303.662" Y="-366.3595" Z="35.65436" Radius="5" />
+    <Blackspot X="4308.978" Y="-368.1035" Z="35.67511" Radius="5" />
+    <Blackspot X="4314.385" Y="-367.9031" Z="35.6628" Radius="5" />
+    <Blackspot X="4319.66" Y="-366.9832" Z="35.70899" Radius="5" />
+    <Blackspot X="4324.724" Y="-364.5525" Z="35.7136" Radius="5" />
+    <Blackspot X="4327.855" Y="-360.2509" Z="35.80455" Radius="5" />
+    <Blackspot X="4330.159" Y="-355.3706" Z="35.83724" Radius="5" />
+    <Blackspot X="4331.904" Y="-350.3036" Z="35.60645" Radius="5" />
+    <Blackspot X="4335.795" Y="-346.4274" Z="35.6783" Radius="5" />
+    <Blackspot X="4340.48" Y="-343.881" Z="35.64474" Radius="5" />
+    <Blackspot X="4344.641" Y="-340.0578" Z="35.53138" Radius="5" />
+    <Blackspot X="4347.17" Y="-335.3641" Z="35.59779" Radius="5" />
+    <Blackspot X="4348.646" Y="-329.9344" Z="35.41913" Radius="5" />
+    <Blackspot X="4351.394" Y="-325.3108" Z="35.37768" Radius="5" />
+    <Blackspot X="4354.208" Y="-320.4497" Z="35.35806" Radius="5" />
+    <Blackspot X="4356.485" Y="-315.5811" Z="35.52602" Radius="5" />
+    <Blackspot X="4358.54" Y="-310.3588" Z="35.44323" Radius="5" />
+    <Blackspot X="4359.495" Y="-305.0758" Z="35.58212" Radius="5" />
+    <Blackspot X="4358.915" Y="-299.7338" Z="35.67941" Radius="5" />
+    <Blackspot X="4356.813" Y="-294.5728" Z="35.88142" Radius="5" />
+    <Blackspot X="4352.791" Y="-291.0276" Z="35.77996" Radius="5" />
+    <Blackspot X="4347.415" Y="-290.3987" Z="35.58414" Radius="5" />
+    <Blackspot X="4349.099" Y="-285.2773" Z="35.51663" Radius="5" />
+    <Blackspot X="4352.286" Y="-281.3693" Z="35.85831" Radius="5" />
+    <Blackspot X="4351.143" Y="-276.1696" Z="35.3173" Radius="5" />
+    <Blackspot X="4348.034" Y="-271.5441" Z="35.78879" Radius="5" />
+    <Blackspot X="4345.755" Y="-266.4973" Z="35.93624" Radius="5" />
+    <Blackspot X="4344.091" Y="-261.3643" Z="35.58165" Radius="5" />
+    <Blackspot X="4342.279" Y="-256.0044" Z="35.6281" Radius="5" />
+    <Blackspot X="4340.991" Y="-250.796" Z="35.42966" Radius="5" />
+    <Blackspot X="4339.717" Y="-245.3372" Z="35.55231" Radius="5" />
+    <Blackspot X="4338.82" Y="-239.8314" Z="35.61892" Radius="5" />
+    <Blackspot X="4338.112" Y="-234.5612" Z="35.61975" Radius="5" />
+    <Blackspot X="4334.258" Y="-230.7746" Z="35.51334" Radius="5" />
+    <Blackspot X="4328.768" Y="-229.743" Z="35.19966" Radius="5" />
+    <Blackspot X="4323.436" Y="-229.0781" Z="35.17854" Radius="5" />
+    <Blackspot X="4317.887" Y="-229.8824" Z="35.27369" Radius="5" />
+    <Blackspot X="4312.718" Y="-231.3269" Z="35.14104" Radius="5" />
+    <Blackspot X="4307.204" Y="-231.6364" Z="35.17164" Radius="5" />
+    <Blackspot X="4302.005" Y="-229.4731" Z="35.65054" Radius="5" />
+    <Blackspot X="4297.299" Y="-226.9538" Z="35.35629" Radius="5" />
+    <Blackspot X="4292.249" Y="-224.466" Z="35.30324" Radius="5" />
+    <Blackspot X="4287.088" Y="-222.9393" Z="35.17868" Radius="5" />
+    <Blackspot X="4281.507" Y="-222.6598" Z="35.25376" Radius="5" />
+    <Blackspot X="4276.193" Y="-224.4939" Z="35.61843" Radius="5" />
+    <Blackspot X="4271.438" Y="-226.9721" Z="35.69482" Radius="5" />
+    <Blackspot X="4267.065" Y="-230.4948" Z="35.45107" Radius="5" />
+    <Blackspot X="4261.851" Y="-232.545" Z="35.68582" Radius="5" />
+    <Blackspot X="4257.904" Y="-236.5066" Z="35.56231" Radius="5" />
+    <Blackspot X="4254.685" Y="-240.7859" Z="35.52141" Radius="5" />
+    <Blackspot X="4252.145" Y="-245.8008" Z="35.61872" Radius="5" />
+    <Blackspot X="4252.266" Y="-251.4362" Z="35.84443" Radius="5" />
+    <Blackspot X="4253.348" Y="-256.6891" Z="35.92091" Radius="5" />
+    <Blackspot X="4254.126" Y="-262.2585" Z="36.0322" Radius="5" />
+    <Blackspot X="4252.387" Y="-267.4657" Z="35.67508" Radius="5" />
+    <Blackspot X="4247.942" Y="-270.7628" Z="35.93538" Radius="5" />
+    <Blackspot X="4243.654" Y="-273.8323" Z="35.83383" Radius="5" />
+    <Blackspot X="4241.722" Y="-279.0933" Z="35.65537" Radius="5" />
+    <Blackspot X="4240.673" Y="-284.3945" Z="35.50193" Radius="5" />
+    <Blackspot X="4239.283" Y="-289.872" Z="35.53676" Radius="5" />
+    <Blackspot X="4238.518" Y="-295.4086" Z="35.65267" Radius="5" />
+    <Blackspot X="4239.827" Y="-300.8676" Z="35.58796" Radius="5" />
+    <Blackspot X="4241.15" Y="-306.0841" Z="35.55184" Radius="5" />
+    <Blackspot X="4239.893" Y="-311.2543" Z="35.48907" Radius="5" />
+    <Blackspot X="4234.868" Y="-313.7498" Z="35.5331" Radius="5" />
+    <Blackspot X="4229.574" Y="-314.7442" Z="35.43339" Radius="5" />
+    <Blackspot X="4224.006" Y="-314.3734" Z="35.42519" Radius="5" />
+    <Blackspot X="4219.086" Y="-311.765" Z="35.48236" Radius="5" />
+    <Blackspot X="4213.459" Y="-311.7965" Z="35.51251" Radius="5" />
+    <Blackspot X="4207.91" Y="-312.3301" Z="35.40096" Radius="5" />
+  </Blackspots>
+  <PullBlackspots>
+  </PullBlackspots>
+</DungeonBuddyProfile>
