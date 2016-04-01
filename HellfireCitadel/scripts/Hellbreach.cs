@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using Bots.DungeonBuddy.Attributes;
 using Bots.DungeonBuddy.Helpers;
 using Buddy.Coroutines;
@@ -47,7 +48,7 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
             }
             else
             {
-                Logger.Write("It is highly recommended you do not afk while in a raid and be prepared to intervene if needed in the event something goes wrong or you're asked to perform a certain task.");
+                Logger.Write(Colors.Gold, "It is highly recommended you do not afk while in a raid and be prepared to intervene if needed in the event something goes wrong or you're asked to perform a certain task.");
             }
             base.OnEnter();
         }

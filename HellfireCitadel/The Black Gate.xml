@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<DungeonBuddyProfile xsi:noNamespaceSchemaLocation="../../DungeonbuddyProfile.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>The Black Gate</Name>
+  <DungeonId>986</DungeonId>
+  <BossEncounters>
+	  <Boss isFinal="true" entry="91331" name="Archimonde" killOrder="1" optional="false" X="4067.704" Y="-2258.623" Z="51.14939"/>
+  </BossEncounters>
+  <Blackspots>
+  </Blackspots>
+  <PullBlackspots>
+  </PullBlackspots>
+</DungeonBuddyProfile>
