@@ -103,19 +103,19 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
                     {
                         case MobId_ShadowedNetherwalker:
                         case MobId_InfernalDoombringer:
-                            priority.Score += 6500;
+                            priority.Score += 6000;
                             break;
                         case MobId_Dreadstalker:
                             if(israngedDps){
-                                priority.Score += 6500;
+                                priority.Score += 4500;
                             }
                             break;
                         case MobId_HellfireDeathcaller:
 						case MobId_FelborneOverfiend:
-							priority.Score += 5000;
+							priority.Score += 5500;
 							break;
                         case MobId_DoomfireSpirit:
-							priority.Score += 4000;
+							priority.Score += 6500;
 							break;
                     }
 				}
@@ -138,7 +138,7 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
         public Func<WoWUnit, Task<bool>> VoidStarEncounter()
         {
             
-            AddAvoidObject(8, MobId_VoidStar);
+            AddAvoidObject(10, MobId_VoidStar);
 
             return async boss =>
                 {
@@ -169,6 +169,7 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
         private const uint AreaTriggerId_LightoftheNaaru = 8892;
         private const int SpellId_ShackledTorment = 185005;
         private const int SpellId_ShackledTorment2 = 184964;
+        private const uint AreaTriggerId_NetherStorm = 9149;
         
         // http://www.wowhead.com/guides/raiding/hellfire-citadel/archimonde-strategy-guide
 		[EncounterHandler((int)MobId_Archimonde, "Archimonde")]
@@ -177,11 +178,14 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
             var isMelee = Me.IsMelee();
             var israngedDps = !isMelee && Me.IsDps();
             
-            AddAvoidObject(5, AreaTriggerId_Doomfire);
+            AddAvoidObject(5, o => o.Entry == AreaTriggerId_Doomfire, ignoreIfBlocking: true);
             AddAvoidObject(10, MobId_Pillar);
             AddAvoidObject(5, AreaTriggerId_LightoftheNaaru); //avoid falling doomfire pools??
-
-            AddAvoidObject(3, MobId_Archimonde); //occasional facing issue with melee, this might fix?
+            
+            if(israngedDps){
+                AddAvoidObject(7, MobId_Dreadstalker); // is distance ok?
+            }
+                 
 
             AddAvoidLocation(
 				ctx => true,
@@ -201,10 +205,12 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
                 m => ((WoWMissile) m).ImpactPosition,
                 () => WoWMissile.InFlightMissiles.Where(m => m.SpellId == MissileId_RainofChaos2));
             
-            AddAvoidObject(25, AreaTriggerId_NetherPortal);
+            AddAvoidObject(25, o => o.Entry == AreaTriggerId_NetherPortal, ignoreIfBlocking: true);
             
-            AddAvoidObject(50, o => o.Entry == MobId_Archimonde && Me.HasAura(SpellId_ShackledTorment));
-            AddAvoidObject(50, o => o.Entry == MobId_Archimonde && Me.HasAura(SpellId_ShackledTorment2));
+            AddAvoidObject(8, o => o.Entry == AreaTriggerId_NetherStorm, ignoreIfBlocking: true);
+            
+            AddAvoidObject(70, o => o.Entry == MobId_Archimonde && Me.HasAura(SpellId_ShackledTorment));
+            AddAvoidObject(70, o => o.Entry == MobId_Archimonde && Me.HasAura(SpellId_ShackledTorment2));
             
             return async boss =>
 						 {

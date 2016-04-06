@@ -9,6 +9,8 @@
 	  <Boss isFinal="true" entry="90435" name="Kormrok" killOrder="3" optional="false" X="4297.909" Y="-301.2104" Z="35.95184" />
   </BossEncounters>
   <Blackspots>
+   <!-- Side of stair at trash after reaver, looked obvious -->
+   <Blackspot X="3961.309" Y="-429.4321" Z="36.87794" Radius="2.865876" />
    <!-- korm pools - messy -->
    <Blackspot X="4274.946" Y="-410.9449" Z="35.91743" Radius="5" />
     <Blackspot X="4273.278" Y="-406.2451" Z="35.47961" Radius="5" />

@@ -10,8 +10,13 @@
 	  <Boss isFinal="true" entry="90269" name="Tyrant Velhari" killOrder="3" optional="false" X="3798.547" Y="2537.909" Z="204.6102" />
   </BossEncounters>
   <Blackspots>
-      <Blackspot X="4008.155" Y="2499.61" Z="210.8061" Radius="13.48737" /> <!-- crates right facing exit of iskar -->
-      <Blackspot X="3987" Y="2538.449" Z="210.806" Radius="6.883886" /> <!-- Side door not open at iskar -->
+      <!-- Objects at ends of stairs -->
+      <Blackspot X="3715.097" Y="2367.782" Z="193.1426" Radius="6" />
+      <Blackspot X="3721.271" Y="2246.279" Z="193.9461" Radius="6" />
+      <Blackspot X="3875.676" Y="2249.886" Z="194.2521" Radius="6" />
+      <Blackspot X="3877.952" Y="2355.315" Z="193.143" Radius="9" />
+      <!-- Side door not open at iskar -->
+      <Blackspot X="3987" Y="2538.449" Z="210.806" Radius="8" />
   </Blackspots>
   <PullBlackspots>
   </PullBlackspots>

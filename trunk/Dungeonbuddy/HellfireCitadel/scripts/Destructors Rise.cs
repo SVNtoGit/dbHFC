@@ -133,10 +133,12 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
                             priority.Score += 6500;
                             break;
                         case MobId_WildPyromaniac:
+                            priority.Score += 5500;
+                            break;
                         case MobId_FelImp:
                         case MobId_DreadInfernal:
                             if(israngedDps){
-                                priority.Score += 5500;
+                                priority.Score += 6500;
                             }
 							break;
                         case MobId_FelIronSummoner:
@@ -159,7 +161,7 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
 		[EncounterHandler(0, "Root Handler")]
 		public Func<WoWUnit, Task<bool>> RootHandler()
 		{
-			AddAvoidObject(10, AreaTriggerId_BloodofMannoroth);
+			AddAvoidObject(33, AreaTriggerId_BloodofMannoroth);
             AddAvoidObject(9, MobId_DreadInfernal);
             
             AddAvoidLocation(
@@ -244,15 +246,15 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
 		[EncounterHandler((int)MobId_Xhulhorac, "Xhul'horac")]
 		public Func<WoWUnit, Task<bool>> XhulhoracEncounter()
 		{
-            AddAvoidObject(4, AreaTriggerId_ChaoticFelblaze);
+            AddAvoidObject(4, o => o.Entry == AreaTriggerId_ChaoticFelblaze, ignoreIfBlocking: true);
             AddAvoidObject(4, AreaTriggerId_FelOrb);
             AddAvoidObject(10, AreaTriggerId_BlackHole3);
             AddAvoidObject(10, AreaTriggerId_BlackHole2);
             AddAvoidObject(10, AreaTriggerId_BlackHole);
-            AddAvoidObject(5, AreaTriggerId_CreepingVoid);
+            AddAvoidObject(5, o => o.Entry == AreaTriggerId_CreepingVoid, ignoreIfBlocking: true);
             
-            AddAvoidObject(5, o => o is WoWPlayer && !o.IsMe && (o.ToPlayer().HasAura(SpellId_FelSurge) || Me.HasAura(SpellId_FelSurge)));
-            AddAvoidObject(5, o => o is WoWPlayer && !o.IsMe && (o.ToPlayer().HasAura(SpellId_VoidSurge) || Me.HasAura(SpellId_VoidSurge)));
+            AddAvoidObject(5, o => o is WoWPlayer && !o.IsMe && (o.ToPlayer().HasAura(SpellId_FelSurge) || Me.HasAura(SpellId_FelSurge)), ignoreIfBlocking: true);
+            AddAvoidObject(5, o => o is WoWPlayer && !o.IsMe && (o.ToPlayer().HasAura(SpellId_VoidSurge) || Me.HasAura(SpellId_VoidSurge)), ignoreIfBlocking: true);
             
             return async boss =>
 						 {
@@ -266,40 +268,46 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
         
         private const uint MobId_Mannoroth = 91349;
         
-        private const uint SpellId_EmpoweredFelHellstorm = 189279;
-        private const uint SpellId_FelHellstorm = 181961;
-        private const uint SpellId_FelHellstorm2 = 181567;
+        private const uint MissileId_EmpoweredFelHellstorm = 189279;
+        private const uint MissileId_FellHellstorm = 181961;
+        private const uint MissileId_FellHellstorm2 = 181567;
+        
+        private const int SpellId_Shadowforce = 181841;
+        private const int SpellId_EmpoweredShadowforce = 182088;
         
         // http://www.wowhead.com/guides/raiding/hellfire-citadel/kilrogg-deadeye-strategy-guide
 		[EncounterHandler((int)MobId_Mannoroth, "Mannoroth")]
 		public Func<WoWUnit, Task<bool>> MannorothEncounter()
 		{
             //try not to stand in front of manno
-            AddAvoidObject(25, o => o.Entry == MobId_Mannoroth && o.ToUnit().Combat, o => o.Location.RayCast(o.Rotation, 45));
+            AddAvoidObject(23, o => o.Entry == MobId_Mannoroth && o.ToUnit().Combat, o => o.Location.RayCast(o.Rotation, 20));
             
             AddAvoidLocation(
 				ctx => true,
 				5,
 				m => ((WoWMissile) m).ImpactPosition,
-				() => WoWMissile.InFlightMissiles.Where(m => m.SpellId == SpellId_EmpoweredFelHellstorm));
+				() => WoWMissile.InFlightMissiles.Where(m => m.SpellId == MissileId_EmpoweredFelHellstorm));
             
             AddAvoidLocation(
 				ctx => true,
 				5,
 				m => ((WoWMissile) m).ImpactPosition,
-				() => WoWMissile.InFlightMissiles.Where(m => m.SpellId == SpellId_FelHellstorm));
+				() => WoWMissile.InFlightMissiles.Where(m => m.SpellId == MissileId_FellHellstorm));
                 
             AddAvoidLocation(
 				ctx => true,
 				5,
 				m => ((WoWMissile) m).ImpactPosition,
-				() => WoWMissile.InFlightMissiles.Where(m => m.SpellId == SpellId_FelHellstorm2));
+				() => WoWMissile.InFlightMissiles.Where(m => m.SpellId == MissileId_FellHellstorm2));
                 
             
             
             return async boss =>
 						 {
-							 return false;
+							 if (!boss.Combat)
+					            return false;
+                             
+                             return await ScriptHelpers.StayAtLocationWhile(() => Me.HasAura(SpellId_Shadowforce) || Me.HasAura(SpellId_EmpoweredShadowforce), boss.Location.RayCast(boss.Rotation, -5), "Shadowforce");
 						 };
         }
         
