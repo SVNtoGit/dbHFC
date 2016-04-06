@@ -236,18 +236,25 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
         private const int SpellId_FullCharge = 182055;
         private const int SpellId_Artillery = 182108;
         
+        private const int SpellId_Blitz = 179889;
+        private const int SpellId_FallingSlam = 182362; //??
+        private const int SpellId_Barrage = 185282;
+        
         // http://www.wowhead.com/guides/raiding/hellfire-citadel/iron-reaver-strategy-guide
 		[EncounterHandler((int)MobId_IronReaver, "Iron Reaver")]
 		public Func<WoWUnit, Task<bool>> IronReaverEncounter()
 		{
-            // Don't stand directly under him (trying to avoid getting caught in blitz)
-            AddAvoidObject(10, MobId_IronReaver);
             // Don't stand in front of Iron Reaver because of frontal cone attack, Barrage.
-            AddAvoidObject(10, o => o.Entry == MobId_IronReaver && o.ToUnit().Combat, o => o.Location.RayCast(o.Rotation, 45));
+            AddAvoidObject(25, o => o.Entry == MobId_IronReaver && o.ToUnit().Combat, o => o.Location.RayCast(o.Rotation, 20));
+            
+            //Blitz additions
+            AddAvoidObject(15, o => o.Entry == MobId_IronReaver && o.ToUnit().Combat && o.ToUnit().CastingSpellId == SpellId_Blitz, o => o.Location);
+            AddAvoidObject(15, o => o.Entry == MobId_IronReaver && o.ToUnit().Combat && o.ToUnit().CastingSpellId == SpellId_Blitz, o => o.Location.RayCast(o.Rotation, 35));
+            AddAvoidObject(15, o => o.Entry == MobId_IronReaver && o.ToUnit().Combat && o.ToUnit().CastingSpellId == SpellId_Blitz, o => o.Location.RayCast(o.Rotation, 50));
             
             // Immo and Fuel Streak
-            AddAvoidObject(3, AreaTriggerId_Immolation);
-            AddAvoidObject(3, AreaTriggerId_FuelStreak);
+            AddAvoidObject(3, o => o.Entry == AreaTriggerId_Immolation, ignoreIfBlocking: true);
+            AddAvoidObject(3, o => o.Entry == AreaTriggerId_FuelStreak, ignoreIfBlocking: true);
             
             // bomb spawns explosions
             AddAvoidLocation(
@@ -258,6 +265,9 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
                 
             // Stay away from anyone targeted by artillery.
             AddAvoidObject(35, o => o is WoWPlayer && !o.IsMe && (o.ToPlayer().HasAura(SpellId_Artillery) || Me.HasAura(SpellId_Artillery)));
+            
+            //Falling Slam
+            AddAvoidObject(35, o => o.Entry == MobId_IronReaver && o.ToUnit().Combat && o.ToUnit().CastingSpellId == SpellId_FallingSlam);
             
             return async boss =>
 						 {
@@ -371,7 +381,7 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
             AddAvoidObject(30, AreaTriggerId_FieryPool);
             AddAvoidObject(30, AreaTriggerId_ShadowyPool);
             
-            AddAvoidObject(2, AreaTriggerId_PurpleWave);
+            AddAvoidObject(3, o => o.Entry == AreaTriggerId_PurpleWave, ignoreIfBlocking: true);
             
             AddAvoidObject(35, o => o is WoWPlayer && !o.IsMe && (o.ToPlayer().HasAura(SpellId_ExplosiveBurst) || Me.HasAura(SpellId_ExplosiveBurst)));
             

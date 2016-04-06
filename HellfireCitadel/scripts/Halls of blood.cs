@@ -92,9 +92,7 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
                             }
                             break;
                         case MobId_GoreboundSpirit: // shared id with constructs :(
-                            if (israngedDps){
                                 priority.Score += 6500;
-                            }
                             break;
                         case MobId_GurtoggBloodboil:
                         case MobId_GoreboundBrute:
@@ -109,6 +107,19 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
 			}
 		}
         
+        private WoWPoint DigestExit = new WoWPoint(3940.885f, -150.2361f, -107.9971f); //need to get exact coord middle of room
+        
+        public override async Task<bool> HandleMovement(WoWPoint location)
+	    {
+		    var myLoc = Me.Location;
+			var meIsInGoreBelly = myLoc.Z < 80.0f;
+			var destIsInGoreBelly = location.Z < 80.0f;
+
+		    if (meIsInGoreBelly && !destIsInGoreBelly){
+                return await ScriptHelpers.StayAtLocationWhile(() => meIsInGoreBelly && !destIsInGoreBelly, DigestExit, "Digest");
+            }
+		    return false;
+	    }
 
         #endregion
         
@@ -179,7 +190,7 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
         private const uint MobId_SalivatingBloodthirster = 90521;
         private const uint MobId_BloodSplatter = 95227;
         private const uint MobId_BloodGlobule = 90477;
-        private const uint SpellId_DeathThroes = 182381;
+        private const uint MissileId_DeathThroes = 182381;
         private const uint AreaTriggerId_BloodSplatter = 9264;
         
         // http://www.wowhead.com/guides/raiding/hellfire-citadel/kilrogg-deadeye-strategy-guide
@@ -191,9 +202,29 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
 				ctx => true,
 				5,
 				m => ((WoWMissile) m).ImpactPosition,
-				() => WoWMissile.InFlightMissiles.Where(m => m.SpellId == SpellId_DeathThroes));
+				() => WoWMissile.InFlightMissiles.Where(m => m.SpellId == MissileId_DeathThroes));
                 
                 AddAvoidObject(5, o => o.Entry == AreaTriggerId_BloodSplatter);
+            
+            return async boss =>
+						 {
+							 return false;
+						 };
+        }
+        
+        #endregion
+        
+        
+        #region Trash
+        
+        private const uint AreaTriggerId_OrbofDestruction = 9208;
+        private const uint MobId_FelHellweaver = 94806;
+        
+        [EncounterHandler((int)MobId_FelHellweaver, "Fel Hellweaver")]
+		public Func<WoWUnit, Task<bool>> FelHellweaverEncounter()
+		{
+            
+            AddAvoidObject(10, AreaTriggerId_OrbofDestruction);
             
             return async boss =>
 						 {
@@ -213,7 +244,7 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
         
         private const uint SpellId_CrushingDarkness = 181534;
         private const int SpellId_TouchofDoom = 179978;
-        
+        private const int SpellId_FeastofSouls = 181973;
         
         // http://www.wowhead.com/guides/raiding/hellfire-citadel/gorefiend-strategy-guide
 		[EncounterHandler((int)MobId_Gorefiend, "Gorefiend")]
@@ -231,10 +262,12 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
 				return player != null && !player.IsMe && (player.HasAura(SpellId_TouchofDoom) || Me.HasAura(SpellId_TouchofDoom));
 			});
                 
-                
             return async boss =>
 						 {
-							 return false;
+							 if (!boss.Combat)
+					            return false;
+                             
+                             return await ScriptHelpers.StayAtLocationWhile(() => boss.CastingSpellId == SpellId_FeastofSouls && Me.CurrentTarget.Entry == MobId_Gorefiend, boss.Location.RayCast(boss.Rotation, 9), "Feast of Souls");
 						 };
         }
         

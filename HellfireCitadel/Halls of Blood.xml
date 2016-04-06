@@ -11,6 +11,8 @@
 	  <Boss isFinal="true" entry="90199" name="Gorefiend" killOrder="3" optional="false" X="3950.103" Y="-100.7014" Z="-21.42087" />
   </BossEncounters>
   <Blackspots>
+    <!-- Stands on a wall -->
+    <Blackspot X="3942.085" Y="-136.331" Z="-104.3732" Radius="3" />
   </Blackspots>
   <PullBlackspots>
   </PullBlackspots>

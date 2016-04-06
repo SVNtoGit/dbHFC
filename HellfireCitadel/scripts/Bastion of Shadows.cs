@@ -104,6 +104,43 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
 			}
 		}
         
+        
+        private readonly Vector2[] _hellfireCitadelIskarArea =
+	    {
+			new Vector2(4094.083f, 2596.255f),
+            new Vector2(4086.359f, 2496.549f),
+            new Vector2(4044.514f, 2474.065f),
+            new Vector2(4037.263f, 2474.67f),
+            new Vector2(3993.114f, 2498.634f),
+            new Vector2(3964.972f, 2535.576f),
+            new Vector2(3964.707f, 2541.975f),
+            new Vector2(3988.533f, 2575.518f),
+            new Vector2(4049.016f, 2598.57f),
+		};
+        
+        
+        /*
+        
+        // does not work, can't get path through door :(
+        // left here for improvement
+        
+        private WoWPoint IskarExit = new WoWPoint(4035.819f, 2445.393f, 206.2967f);
+
+	    public override async Task<bool> HandleMovement(WoWPoint location)
+	    {
+		    var myLoc = Me.Location;
+			var meIsInIskarArea = WoWMathHelper.IsPointInPoly(myLoc, _hellfireCitadelIskarArea);
+			var destIsInIskarArea = WoWMathHelper.IsPointInPoly(location, _hellfireCitadelIskarArea);
+
+		    if (meIsInIskarArea && !destIsInIskarArea){
+                //Try to move via entrance door, otherwise we run into crates/walls
+                return await ScriptHelpers.StayAtLocationWhile(() => meIsInIskarArea && !destIsInIskarArea, IskarExit, "Leaving Iskars Room");
+                
+            }
+		    return false;
+	    }
+        */
+        
 
         #endregion
         
@@ -117,17 +154,22 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
         private const uint MobId_ShadowLordIskar = 90316;
         
         private const uint AreaTriggerId_FelIncineration = 8699;
+        private const int SpellId_PhantasmalWinds = 181957;
+        private WoWPoint AwayFromLedge = new WoWPoint(4038.455f, 2502.004f, 210.8059f); //need to get exact coord middle of room
         
         // http://www.wowhead.com/guides/raiding/hellfire-citadel/hellfire-high-council-strategy-guide
 		[EncounterHandler((int)MobId_ShadowLordIskar, "Shadow-Lord Iskar")]
 		public Func<WoWUnit, Task<bool>> ShadowLordIskarEncounter()
 		{
             
-            AddAvoidObject(5, o => o.Entry == AreaTriggerId_FelIncineration);
+            AddAvoidObject(5, o => o.Entry == AreaTriggerId_FelIncineration, ignoreIfBlocking: true);
             
             return async boss =>
 						 {
-							 return false;
+							 if (!boss.Combat)
+					            return false;
+                             
+                             return await ScriptHelpers.StayAtLocationWhile(() => Me.HasAura(SpellId_PhantasmalWinds), AwayFromLedge, "Phantasmal Winds");
 						 };
         }
         
@@ -142,6 +184,10 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
         private const uint AreaTriggerId_FelPrison = 8514; //may have another id
         private const int SpellId_GiftoftheManari = 184125;
         
+        private const int SpellId_FelblazeCharge = 184247;
+        
+        private WoWUnit _construct;
+        
         // http://www.wowhead.com/guides/raiding/hellfire-citadel/hellfire-high-council-strategy-guide
 		[EncounterHandler((int)MobId_SoulboundConstruct, "Soulbound Construct")]
 		public Func<WoWUnit, Task<bool>> SoulboundConstructEncounter()
@@ -151,10 +197,17 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
             AddAvoidObject(10, o => o.Entry == AreaTriggerId_FelblazeCharge);
             AddAvoidObject(15, o => o.Entry == AreaTriggerId_FelPrison);
             
+            // Felblaze Charge line
+			AddAvoidLine(ctx => ScriptHelpers.IsViable(_construct) && _construct.CastingSpellId == SpellId_FelblazeCharge,
+				() => 5,
+				() => _construct.Location,
+				() => _construct.CurrentTarget.Location);
+            
             AddAvoidObject(10, o => o is WoWPlayer && !o.IsMe && (o.ToPlayer().HasAura(SpellId_GiftoftheManari) || Me.HasAura(SpellId_GiftoftheManari)));
             
             return async boss =>
 						 {
+                             _construct = boss;
 							 return false;
 						 };
         }
@@ -207,9 +260,9 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
         
         private const uint MobId_TyrantVelhari = 90269;
         
-        private const uint SpellId_SearingBlaze = 183089; //missile
-        private const uint AreaTriggerId_EnforcersOnslaught = 8502; //5 yards
-        private const uint AreaTriggerId_DespoiledGround = 8533; //10 yards?
+        private const uint MissileId_SearingBlaze = 183089;
+        private const uint AreaTriggerId_EnforcersOnslaught = 8502;
+        private const uint AreaTriggerId_DespoiledGround = 8533;
         private const int SpellId_FontofCorruption = 180526;
         
         // http://www.wowhead.com/guides/raiding/hellfire-citadel/gorefiend-strategy-guide
@@ -221,10 +274,10 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
 				ctx => true,
 				3,
 				m => ((WoWMissile) m).ImpactPosition,
-				() => WoWMissile.InFlightMissiles.Where(m => m.SpellId == SpellId_SearingBlaze));
+				() => WoWMissile.InFlightMissiles.Where(m => m.SpellId == MissileId_SearingBlaze));
             
             AddAvoidObject(5, o => o.Entry == AreaTriggerId_EnforcersOnslaught);
-            AddAvoidObject(8, o => o.Entry == AreaTriggerId_DespoiledGround);
+            AddAvoidObject(8, o => o.Entry == AreaTriggerId_DespoiledGround, ignoreIfBlocking: true);
             
             AddAvoidObject(5, o => o is WoWPlayer && !o.IsMe && (o.ToPlayer().HasAura(SpellId_FontofCorruption) || Me.HasAura(SpellId_FontofCorruption)));
             
