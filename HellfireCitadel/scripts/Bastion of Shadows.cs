@@ -279,7 +279,9 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
             AddAvoidObject(5, o => o.Entry == AreaTriggerId_EnforcersOnslaught);
             AddAvoidObject(8, o => o.Entry == AreaTriggerId_DespoiledGround, ignoreIfBlocking: true);
             
-            AddAvoidObject(5, o => o is WoWPlayer && !o.IsMe && (o.ToPlayer().HasAura(SpellId_FontofCorruption) || Me.HasAura(SpellId_FontofCorruption)));
+            if(!Me.IsMelee()){
+                AddAvoidObject(5, o => o is WoWPlayer && !o.IsMe && (o.ToPlayer().HasAura(SpellId_FontofCorruption) || Me.HasAura(SpellId_FontofCorruption)));
+            }
             
             return async boss =>
 						 {
