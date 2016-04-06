@@ -166,10 +166,10 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
             
             return async boss =>
 						 {
-							 if (!boss.Combat)
+							 //if (!boss.Combat)
 					            return false;
                              
-                             return await ScriptHelpers.StayAtLocationWhile(() => Me.HasAura(SpellId_PhantasmalWinds), AwayFromLedge, "Phantasmal Winds");
+                             //return await ScriptHelpers.StayAtLocationWhile(() => Me.HasAura(SpellId_PhantasmalWinds), AwayFromLedge, "Phantasmal Winds");
 						 };
         }
         
