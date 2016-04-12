@@ -147,6 +147,22 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
         
 		#region Root
 
+        private const uint ObjectId_NexusDoor = 243482;
+        private const uint ObjectId_DemonWingDoor = 242319;
+        private const uint ObjectId_ArakkoaEntranceVindicator = 242280;
+        private const uint ObjectId_ArakkoaEntranceFelLord  = 241732;
+
+		[EncounterHandler(0, "Root Handler")]
+		public Func<WoWUnit, Task<bool>> RootHandler()
+		{
+			AddAvoidObject(8, ObjectId_NexusDoor);
+            AddAvoidObject(8, ObjectId_DemonWingDoor);
+            AddAvoidObject(8, ObjectId_ArakkoaEntranceVindicator);
+            AddAvoidObject(8, ObjectId_ArakkoaEntranceFelLord);
+            
+			return async boss => false;
+		}
+
 		#endregion
         
         #region ShadowLordIskar
