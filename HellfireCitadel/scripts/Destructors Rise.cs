@@ -166,7 +166,7 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
 		{
 			AddAvoidObject(33, AreaTriggerId_BloodofMannoroth);
             AddAvoidObject(9, MobId_DreadInfernal);
-            AddAvoidObject(20, AreaTriggerId_FelLordExit);
+            AddAvoidObject(10, AreaTriggerId_FelLordExit);
             
             AddAvoidLocation(
 				ctx => true,
