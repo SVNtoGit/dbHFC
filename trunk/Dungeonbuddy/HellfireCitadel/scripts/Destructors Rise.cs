@@ -157,12 +157,16 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
 
         private const uint AreaTriggerId_BloodofMannoroth = 8672;
         private const uint SpellId_FelStreak = 181190;
+        private const uint AreaTriggerId_FelLordExit = 241733;
+
+
 
 		[EncounterHandler(0, "Root Handler")]
 		public Func<WoWUnit, Task<bool>> RootHandler()
 		{
 			AddAvoidObject(33, AreaTriggerId_BloodofMannoroth);
             AddAvoidObject(9, MobId_DreadInfernal);
+            AddAvoidObject(20, AreaTriggerId_FelLordExit);
             
             AddAvoidLocation(
 				ctx => true,
