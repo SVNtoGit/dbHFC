@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -98,7 +98,8 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
 				if (mannoPort != null && await ScriptHelpers.InteractWithObject(mannoPort))
 					return true;
             }
-		    return false;
+		    
+            return await FelLordZakuunDoorHandler(location) || await XhulhoracDoorHandler(location) || await SummonerDoorHandler(location);
 	    }
         
         private const uint MobId_VanguardAkkelion = 94185;
@@ -166,7 +167,7 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
 		{
 			AddAvoidObject(33, AreaTriggerId_BloodofMannoroth);
             AddAvoidObject(9, MobId_DreadInfernal);
-            AddAvoidObject(10, AreaTriggerId_FelLordExit);
+            AddAvoidObject(18, AreaTriggerId_FelLordExit);
             
             AddAvoidLocation(
 				ctx => true,
@@ -316,6 +317,115 @@ namespace Bots.DungeonBuddy.Raids.WarlordsOfDraenor
         }
         
         #endregion
+        
+        #region FelLordZakuun Gate
+
+        private const uint ObjectId_HellfireRaidGate = 242510;
+
+		private readonly WoWPoint _hellfireDoorRightEdge = new WoWPoint(4209.189, 2554.937, 179.9163);
+		private readonly WoWPoint _hellfireDoorLeftEdge = new WoWPoint(4207.504, 2485.602, 179.9164);
+
+		private async Task<bool> FelLordZakuunDoorHandler(WoWPoint location)
+		{
+			var myLoc = Me.Location;
+			if (myLoc.DistanceSqr(_hellfireDoorLeftEdge) > 25*15)
+				return false;
+
+			var door = ObjectManager.GetObjectsOfType<WoWGameObject>().FirstOrDefault(g => g.Entry == ObjectId_HellfireRaidGate);
+			if (door == null || ((WoWDoor)door.SubObj).IsOpen)
+				return false;
+
+			var movePath = ((MeshNavigator) Navigator.NavigationProvider).CurrentMovePath;
+			if (movePath == null || movePath.Index >= movePath.Path.Points.Length || movePath.Index < 0)
+				return false;
+
+			var waypoint = (WoWPoint)movePath.Path.Points[movePath.Index];
+			var isPlayerLeftOfDoor = myLoc.IsPointLeftOfLine(_hellfireDoorLeftEdge, _hellfireDoorRightEdge);
+			var isWaypointLeftOfDoor = waypoint.IsPointLeftOfLine(_hellfireDoorLeftEdge, _hellfireDoorRightEdge);
+
+			// player and waypoint are on same side then return.
+            if (isPlayerLeftOfDoor == isWaypointLeftOfDoor)
+				return false;
+
+			TreeRoot.StatusText = "Waiting on Hellfire gate to open";
+			await CommonCoroutines.StopMoving();
+			return true;
+		}
+
+		#endregion FelLordZakuun Gate
+
+        
+        #region Xhulhorac Gate
+
+        private const uint ObjectId_Doodad_6FX_Firewall_DoorFel001 = 243540;
+
+		private readonly WoWPoint _xhulfireDoorRightEdge = new WoWPoint(4132.638, 2201.691, 184.3424);
+		private readonly WoWPoint _xhulfireDoorLeftEdge = new WoWPoint(4148.038, 2201.674, 184.3429);
+
+		private async Task<bool> XhulhoracDoorHandler(WoWPoint location)
+		{
+			var myLoc = Me.Location;
+			if (myLoc.DistanceSqr(_xhulfireDoorLeftEdge) > 25*15)
+				return false;
+
+			var door = ObjectManager.GetObjectsOfType<WoWGameObject>().FirstOrDefault(g => g.Entry == ObjectId_Doodad_6FX_Firewall_DoorFel001);
+			if (door == null || ((WoWDoor)door.SubObj).IsOpen)
+				return false;
+
+			var movePath = ((MeshNavigator) Navigator.NavigationProvider).CurrentMovePath;
+			if (movePath == null || movePath.Index >= movePath.Path.Points.Length || movePath.Index < 0)
+				return false;
+
+			var waypoint = (WoWPoint)movePath.Path.Points[movePath.Index];
+			var isPlayerLeftOfDoor = myLoc.IsPointLeftOfLine(_xhulfireDoorLeftEdge, _xhulfireDoorRightEdge);
+			var isWaypointLeftOfDoor = waypoint.IsPointLeftOfLine(_xhulfireDoorLeftEdge, _xhulfireDoorRightEdge);
+
+			// player and waypoint are on same side then return.
+            if (isPlayerLeftOfDoor == isWaypointLeftOfDoor)
+				return false;
+
+			TreeRoot.StatusText = "Waiting on Xhulhorac fire door to open";
+			await CommonCoroutines.StopMoving();
+			return true;
+		}
+
+		#endregion Xhulhorac Gate
+        
+        #region Summoner Entrance
+
+        private const uint ObjectId_SummonerEntrance = 242407;
+
+		private readonly WoWPoint _summonerDoorRightEdge = new WoWPoint(4154.826, 2281.968, 206.9238);
+		private readonly WoWPoint _summonerDoorLeftEdge = new WoWPoint(4125.467, 2282.768, 206.9238);
+
+		private async Task<bool> SummonerDoorHandler(WoWPoint location)
+		{
+			var myLoc = Me.Location;
+			if (myLoc.DistanceSqr(_summonerDoorLeftEdge) > 25*15)
+				return false;
+
+			var door = ObjectManager.GetObjectsOfType<WoWGameObject>().FirstOrDefault(g => g.Entry == ObjectId_SummonerEntrance);
+			if (door == null || ((WoWDoor)door.SubObj).IsOpen)
+				return false;
+
+			var movePath = ((MeshNavigator) Navigator.NavigationProvider).CurrentMovePath;
+			if (movePath == null || movePath.Index >= movePath.Path.Points.Length || movePath.Index < 0)
+				return false;
+
+			var waypoint = (WoWPoint)movePath.Path.Points[movePath.Index];
+			var isPlayerLeftOfDoor = myLoc.IsPointLeftOfLine(_summonerDoorLeftEdge, _summonerDoorRightEdge);
+			var isWaypointLeftOfDoor = waypoint.IsPointLeftOfLine(_summonerDoorLeftEdge, _summonerDoorRightEdge);
+
+			// player and waypoint are on same side then return.
+            if (isPlayerLeftOfDoor == isWaypointLeftOfDoor)
+				return false;
+
+			TreeRoot.StatusText = "Waiting on Summoner Entrance to open";
+			await CommonCoroutines.StopMoving();
+			return true;
+		}
+
+		#endregion Summoner Entrance
         
 	}
 }
